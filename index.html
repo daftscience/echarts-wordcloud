@@ -1,0 +1,90 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src='./node_modules/echarts/dist/echarts.js'></script>
+        <script src='./example/data.js'></script>
+        <script src='./dist/echarts-wordcloud.js'></script>
+    </head>
+    <body>
+        <style>
+            html, body, #main {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+            }
+        </style>
+        <div id='main'></div>
+        <script>
+            var chart = echarts.init(document.getElementById('main'));
+
+            var data = [];
+            for (var name in keywords) {
+                data.push({
+                    name: name,
+                    value: Math.sqrt(keywords[name])
+                })
+            }
+
+            var maskImage = new Image();
+
+            var option = {
+                series: [ {
+                    type: 'wordCloud',
+                    sizeRange: [2, 100],
+                    rotationRange: [-90, 90],
+                    rotationStep: 45,
+                    gridSize: 1,
+                    // shape: 'pentagon',
+                    maskImage: maskImage,
+                    drawOutOfBound: false,
+                    textStyle: {
+                        normal: {
+                            color: function () {
+                                return 'rgb(' + [
+                                    Math.round(Math.random() * 160),
+                                    Math.round(Math.random() * 160),
+                                    Math.round(Math.random() * 160)
+                                ].join(',') + ')';
+                            }
+                        },
+                        emphasis: {
+                            color: 'red'
+                        }
+                    },
+                    data: data.sort(function (a, b) {
+                        return b.value  - a.value;
+                    })
+                } ]
+            };
+
+            maskImage.onload = function () {
+                option.series[0].maskImage
+                chart.setOption(option);
+            }
+            // https://vectr.com/tmp/b7TnDAF8r/bLwUKCr84
+            maskImage.src = './example/star.png';
+            // maskImage.src = './example/belinda.png';
+
+            window.onresize = function () {
+                chart.resize();
+            }
+
+
+                        //Create a new PDF canvas context.
+            // var ctx = new canvas2pdf.Context(blobStream());
+
+            // //draw your canvas like you would normally
+            // ctx.fillStyle='yellow';
+            // ctx.fillRect(100,100,100,100);
+            // // more canvas drawing, etc...
+
+            // //convert your PDF to a Blob and save to file
+            // ctx.stream.on('finish', function () {
+            //     var blob = ctx.stream.toBlob('application/pdf');
+            //     saveAs(blob, 'example.pdf', true);
+            // });
+            // ctx.end();
+
+        </script>
+    </body>
+</html>

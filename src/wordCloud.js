@@ -1,6 +1,7 @@
+require('./canvas2svg');
+
 var echarts = require('echarts/lib/echarts');
 var layoutUtil = require('echarts/lib/util/layout');
-
 require('./WordCloudSeries');
 require('./WordCloudView');
 
@@ -55,6 +56,26 @@ function updateCanvasMask(maskCanvas) {
     }
 
     ctx.putImageData(newImageData, 0, 0);
+
+
+                        //Create a new PDF canvas context.
+    // var c2p = new canvas2pdf.Context(ctx);
+
+            // //draw your canvas like you would normally
+            // ctx.fillStyle='yellow';
+            // ctx.fillRect(100,100,100,100);
+            // // more canvas drawing, etc...
+
+            // //convert your PDF to a Blob and save to file
+            // ctx.stream.on('finish', function () {
+            //     var blob = ctx.stream.toBlob('application/pdf');
+            //     saveAs(blob, 'example.pdf', true);
+            // });
+            // ctx.end();
+
+
+
+
 }
 
 echarts.registerLayout(function (ecModel, api) {

@@ -7,6 +7,13 @@
  */
 
 'use strict';
+var canvas = require('canvas'),
+    jsdom = require('jsdom'),
+    C2S = require('canvas2svg');
+
+var document = jsdom.jsdom();
+var ctx = new C2S({document: document});
+
 
 // setImmediate
 if (!window.setImmediate) {
@@ -91,6 +98,7 @@ if (!window.clearImmediate) {
   // Check if WordCloud can run on this browser
   var isSupported = (function isSupported() {
     var canvas = document.createElement('canvas');
+
     if (!canvas || !canvas.getContext) {
       return false;
     }
@@ -110,6 +118,7 @@ if (!window.clearImmediate) {
       return false;
     }
 
+    console.log(canvas);
     return true;
   }());
 
